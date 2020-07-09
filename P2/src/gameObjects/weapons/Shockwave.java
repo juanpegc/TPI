@@ -6,9 +6,11 @@ import tp.p1.Game;
 public class Shockwave extends Weapon {
 
 	public static final int DAMAGE = 1;
-	
-	public Shockwave(Game game, int row, int col, int damage) {
+	private boolean active;
+
+	public Shockwave(Game game, int row, int col) {
 		super(game, row, col, DAMAGE);
+		active = true;
 	}
 
 	@Override
@@ -17,25 +19,25 @@ public class Shockwave extends Weapon {
 	}
 
 	@Override
-	public void move() {}
+	public void move() {
+	}
 
 	@Override
 	public boolean performAttack(GameObject other) {
 		other.receiveShockWaveAttack(DAMAGE);
-		onDelete();
 		return true;
 	}
 
 	@Override
 	public void computerAction() {
-		// TODO Auto-generated method stub
-		
 	}
 
-	@Override
-	public void onDelete() {
-		// TODO Auto-generated method stub
-		
+	public void deactivate() {
+		active = false;
 	}
-	
+
+	public boolean getActive() {
+		return active;
+	}
+
 }

@@ -27,7 +27,9 @@ public class Ovni extends EnemyShip implements IExecuteRandomActions {
 	public void move() {
 		if (isAlive()) {
 			col--;
-			if(col == -1) onDelete();
+			if(col == -1) {
+				live = 0;
+			}
 		}
 	}
 
@@ -53,7 +55,12 @@ public class Ovni extends EnemyShip implements IExecuteRandomActions {
 	@Override
 	public void onDelete() {
 		super.onDelete();
+		col = -1;
 		game.enableShockWave();
+	}
+	
+	public void deactivate() {
+		live = 0;
 	}
 
 }

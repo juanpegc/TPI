@@ -39,14 +39,24 @@ public class UCMShip extends Ship {
 	public void move() {
 	}
 
-	public boolean hasSuperPower() {
-		return shockwave != null;
+	public boolean hasShockwave() {
+		return shockwave.getActive();
 	}
 
 	public void setShockwave(Game game) {
-		if (!hasSuperPower())
-			shockwave = new Shockwave(game, -1, -1, 1);
+		if (!hasShockwave())
+			shockwave = new Shockwave(game, -1, -1);
 		this.game = game;
+	}
+
+	public boolean shockwave() {
+		if (hasShockwave()) {
+			game.laseToAll();
+			shockwave.deactivate();
+			shockwave = null;
+			return true;
+		}
+		else return false;
 	}
 
 	@Override
@@ -62,11 +72,11 @@ public class UCMShip extends Ship {
 	@Override
 	public void onDelete() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public UCMMissile shoot() {
-		if(ucmMissile == null || !ucmMissile.isAlive()) {
+		if (ucmMissile == null || !ucmMissile.isAlive()) {
 			ucmMissile = new UCMMissile(game, row, col);
 			return ucmMissile;
 		}

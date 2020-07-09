@@ -22,7 +22,7 @@ public class BoardInitializer {
 
 	private void initializeOvni() {
 		Ovni ovni = new Ovni(game, 0, Game.COLUMN);
-		ovni.onDelete();
+		ovni.deactivate();
 		board.add(ovni);
 	}
 

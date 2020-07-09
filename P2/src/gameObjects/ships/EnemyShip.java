@@ -14,7 +14,7 @@ public abstract class EnemyShip extends Ship{
 	@Override
 	public void onDelete() {
 		super.onDelete();
-		game.setPoints(points);
+		game.receivePoints(points);
 	}
 
 	@Override

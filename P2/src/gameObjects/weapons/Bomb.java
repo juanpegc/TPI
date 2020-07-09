@@ -40,9 +40,4 @@ public class Bomb extends Weapon {
 	public void computerAction() {
 	}
 
-	@Override
-	public void onDelete() {
-		live = 0;
-	}
-
 }

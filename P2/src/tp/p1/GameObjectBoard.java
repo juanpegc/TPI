@@ -1,6 +1,7 @@
 package tp.p1;
 
 import gameObjects.GameObject;
+import gameObjects.weapons.Shockwave;
 
 public class GameObjectBoard {
 	private GameObject[] objects;
@@ -8,14 +9,10 @@ public class GameObjectBoard {
 	private int tamMax;
 
 	public GameObjectBoard(int rows, int cols) {
-		tamMax = rows * cols;
+		tamMax = 18;	//TODO esto hay que cambiarlo
 		currentObjects = 0;
 		objects = new GameObject[tamMax];
 	}
-/*
-	private int getCurrentObjects() {
-		return currentObjects;
-	}*/
 
 	public void add(GameObject object) {
 		if (currentObjects < tamMax) {
@@ -30,16 +27,17 @@ public class GameObjectBoard {
 		int i = 0;
 		while (i < currentObjects && !isHere) {
 			isHere = objects[i].isHere(row, col);
-			if(isHere) go = objects[i];
+			if (isHere)
+				go = objects[i];
 			i++;
 		}
 		return go;
 	}
 
 	private int getIndex(int row, int col) {
-		int i = currentObjects - 2;
+		int i = 0;
 		boolean found = false;
-		while (i >= 0 && !found) {
+		while (i <  currentObjects && !found) {
 			if (objects[i].getRow() == row && objects[i].getCol() == col)
 				return i;
 			i++;
@@ -47,9 +45,9 @@ public class GameObjectBoard {
 		return -1;
 	}/* si vuestra solución requiere que sea public,se puede cambiar */
 
-	public void remove(GameObject object) {
+	private void remove(GameObject object) {
 		int i = getIndex(object.getRow(), object.getCol());
-		while (i < currentObjects - 1) {
+		while (i < currentObjects) {
 			objects[i] = objects[i + 1];
 			i++;
 		}
@@ -58,35 +56,48 @@ public class GameObjectBoard {
 	}
 
 	public void update() {
-		for(int i = 0; i < currentObjects; i++) objects[i].move();
-		for(int i = 0; i < currentObjects; i++) checkAttacks(objects[i]);
+		for (int i = 0; i < currentObjects; i++)
+			objects[i].move();
+		for (int i = 0; i < currentObjects; i++)
+			checkAttacks(objects[i]);
 		removeDead();
 	}
 
 	private void checkAttacks(GameObject object) {
-		for(int i = 0; i < currentObjects; i++) {
+		for (int i = 0; i < currentObjects; i++) {
 			GameObject go = getObjectInPosition(objects[i].getRow(), objects[i].getCol());
-			if(!go.equals(object) && go.isAlive() && object.isAlive() && go.isHere(object.getRow(), object.getCol())) {
+			if (!go.equals(object) && go.isAlive() && object.isAlive() && go.isHere(object.getRow(), object.getCol())) {
 				object.performAttack(go);
 			}
 		}
 	}
 
 	public void computerAction() {
-		for(int i = 0; i < currentObjects; i++) objects[i].computerAction();
+		for (int i = 0; i < currentObjects; i++)
+			objects[i].computerAction();
 	}
 
 	private void removeDead() {
-		for(int i = 0; i < currentObjects; i++) {
-			if(!objects[i].isAlive() && !objects[i].isOut()) {
+		int max = currentObjects;
+		for (int i = 0; i < max; i++) {
+			if (objects[i] != null && !objects[i].isAlive() && !objects[i].isOut()) {
 				remove(objects[i]);
+				i--;
 			}
+		}
+	}
+	
+	public void laseToAll() {
+		for(int i = 0; i < currentObjects; i++) {
+			objects[i].receiveShockWaveAttack(Shockwave.DAMAGE);
 		}
 	}
 
 	public String toString(int row, int col) {
 		GameObject go = getObjectInPosition(row, col);
-		if(go == null) return "    ";
-		else return go.toString();
+		if (go == null)
+			return "    ";
+		else
+			return go.toString();
 	}
 }

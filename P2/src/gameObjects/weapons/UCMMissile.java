@@ -6,7 +6,7 @@ import tp.p1.Game;
 public class UCMMissile extends Weapon {
 
 	public static final int DAMAGE = 1;
-	
+
 	public UCMMissile(Game game, int row, int col) {
 		super(game, row, col, DAMAGE);
 
@@ -16,7 +16,8 @@ public class UCMMissile extends Weapon {
 	public void move() {
 		if (row >= 0) {
 			row--;
-			if(row < 0) onDelete();
+			if (row < 0)
+				onDelete();
 		}
 	}
 
@@ -39,12 +40,7 @@ public class UCMMissile extends Weapon {
 	}
 
 	@Override
-	public void computerAction() {		
+	public void computerAction() {
 	}
 
-	@Override
-	public void onDelete() {
-		live = 0;
-	}
-	
 }

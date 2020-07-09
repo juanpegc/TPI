@@ -16,5 +16,10 @@ public abstract class Weapon extends GameObject{
 	public int getDamage() {
 		return damage;
 	}
+	
+	@Override
+	public void onDelete() {
+		live = 0;
+	}
 
 }

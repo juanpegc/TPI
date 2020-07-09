@@ -50,10 +50,6 @@ public class Game implements IPlayerController {
 	public void addObject(GameObject object) {
 		board.add(object);
 	}
-	
-	public void removeObject(GameObject object) {
-		board.remove(object);
-	}
 
 	public String positionToString(int row, int col) {
 		return board.toString(row, col);
@@ -78,17 +74,16 @@ public class Game implements IPlayerController {
 	}
 
 	public boolean isOnBoard(int row, int col) {
-		return row >= 0 && row < ROW && col >= 0 && col < COLUMN - 1;
+		return row >= -1 && row <= ROW && col >= 0 && col < COLUMN - 1;
 	}
 
 	public void exit() {
 		doExit = true;
 	}
-/*
-	public String infoToString() {
-		return  cadena estado−juego para imprimir junto con el tablero ;
-	}
-*/
+	/*
+	 * public String infoToString() { return cadena estado−juego para imprimir junto
+	 * con el tablero ; }
+	 */
 
 	public String getWinnerMessage() {
 		if (playerWin())
@@ -110,7 +105,7 @@ public class Game implements IPlayerController {
 	@Override
 	public boolean shootMissile() {
 		GameObject ucmMissile = player.shoot();
-		if(ucmMissile != null) {
+		if (ucmMissile != null) {
 			addObject(ucmMissile);
 			return true;
 		}
@@ -119,18 +114,12 @@ public class Game implements IPlayerController {
 
 	@Override
 	public boolean shockWave() {
-		if (player.hasSuperPower()) {
-
-			// do the superpower
-			return true;
-		}
-		return false;
+		return player.shockwave();
 	}
 
 	@Override
 	public void receivePoints(int points) {
-		// TODO Auto-generated method stub
-
+		this.points += points;
 	}
 
 	@Override
@@ -140,11 +129,11 @@ public class Game implements IPlayerController {
 
 	@Override
 	public void enableMissile() {
-		//TODO implement
+		// TODO implement
 	}
 
 	public void list() {
-		//System.out.println(gamePrinter.drawList());
+		// System.out.println(gamePrinter.drawList());
 	}
 
 	public int getCycles() {
@@ -154,16 +143,16 @@ public class Game implements IPlayerController {
 	public int getPoints() {
 		return points;
 	}
-	
-	public void setPoints(int points) {
-		this.points += points;
-	}
-	
+
 	public UCMShip getUCMShip() {
 		return player;
 	}
 
 	public GameObjectBoard getGameObjectBoard() {
 		return board;
+	}
+
+	public void laseToAll() {
+		board.laseToAll();
 	}
 }
