@@ -4,7 +4,7 @@ import tp.p1.Game;
 
 public abstract class GameObject implements IAttack {
 
-	protected static int row;
+	protected int row;
 	protected int col;
 	protected int live;
 	protected Game game;
@@ -41,14 +41,6 @@ public abstract class GameObject implements IAttack {
 	public void getDamage(int damage) {
 		live -= damage;
 		if (live <= 0) {
-			onDelete();
-		}
-	}
-	
-	public void getDamage(int damage, int points) {
-		live -= damage;
-		if(live <= 0) {
-			game.setPoints(points);
 			onDelete();
 		}
 	}

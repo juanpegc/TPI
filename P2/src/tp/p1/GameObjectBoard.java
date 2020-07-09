@@ -37,7 +37,7 @@ public class GameObjectBoard {
 	}
 
 	private int getIndex(int row, int col) {
-		int i = currentObjects - 1;
+		int i = currentObjects - 2;
 		boolean found = false;
 		while (i >= 0 && !found) {
 			if (objects[i].getRow() == row && objects[i].getCol() == col)
@@ -47,7 +47,7 @@ public class GameObjectBoard {
 		return -1;
 	}/* si vuestra solución requiere que sea public,se puede cambiar */
 
-	private void remove(GameObject object) {
+	public void remove(GameObject object) {
 		int i = getIndex(object.getRow(), object.getCol());
 		while (i < currentObjects - 1) {
 			objects[i] = objects[i + 1];

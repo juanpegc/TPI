@@ -10,11 +10,17 @@ public abstract class EnemyShip extends Ship{
 		super(game, row, col, live);
 		this.points = points;
 	}
+	
+	@Override
+	public void onDelete() {
+		super.onDelete();
+		game.setPoints(points);
+	}
 
 	@Override
 	public boolean receiveMissileAttack(int damage) {
 		if(isAlive()) {
-			getDamage(damage, points);
+			getDamage(damage);
 			return true;
 		}
 		return false;
@@ -23,7 +29,7 @@ public abstract class EnemyShip extends Ship{
 	@Override
 	public boolean receiveShockWaveAttack(int damage) {
 		if(isAlive()) {
-			getDamage(damage, points);
+			getDamage(damage);
 			return true;
 		}
 		return false;

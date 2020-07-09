@@ -11,4 +11,9 @@ public abstract class Ship extends GameObject{
 
 	}
 	
+	@Override
+	public void onDelete() {
+		live = 0;
+	}
+	
 }

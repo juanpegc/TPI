@@ -50,6 +50,10 @@ public class Game implements IPlayerController {
 	public void addObject(GameObject object) {
 		board.add(object);
 	}
+	
+	public void removeObject(GameObject object) {
+		board.remove(object);
+	}
 
 	public String positionToString(int row, int col) {
 		return board.toString(row, col);

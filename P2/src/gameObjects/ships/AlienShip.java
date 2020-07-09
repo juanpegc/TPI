@@ -4,13 +4,13 @@ import tp.p1.Game;
 
 public abstract class AlienShip extends EnemyShip{
 	
+	
 	public AlienShip(Game game, int row, int col, int live, int points) {
 		super(game, row, col, live, points);
-		// TODO Auto-generated constructor stub
 	}
 
 	public static boolean haveLanded() {
-		return row == Game.ROW;
+		return false;
 	}
 
 	public static boolean allDead() {

@@ -33,15 +33,13 @@ public class Ovni extends EnemyShip implements IExecuteRandomActions {
 
 	@Override
 	public boolean receiveMissileAttack(int damage) {
-		getDamage(damage, points);
-		game.enableShockWave();
-		// Enable Shockwave
+		getDamage(damage);
 		return true;
 	}
 
 	@Override
 	public boolean receiveShockWaveAttack(int damage) {
-		getDamage(damage, points);
+		getDamage(damage);
 		return true;
 	}
 
@@ -54,7 +52,8 @@ public class Ovni extends EnemyShip implements IExecuteRandomActions {
 
 	@Override
 	public void onDelete() {
-		live = 0;
+		super.onDelete();
+		game.enableShockWave();
 	}
 
 }
