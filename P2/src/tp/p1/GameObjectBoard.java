@@ -9,7 +9,7 @@ public class GameObjectBoard {
 	private int tamMax;
 
 	public GameObjectBoard(int rows, int cols) {
-		tamMax = 18;	//TODO esto hay que cambiarlo
+		tamMax = 24; // TODO esto hay que cambiarlo
 		currentObjects = 0;
 		objects = new GameObject[tamMax];
 	}
@@ -33,25 +33,25 @@ public class GameObjectBoard {
 		}
 		return go;
 	}
-
+	
+/*
 	private int getIndex(int row, int col) {
 		int i = 0;
 		boolean found = false;
-		while (i <  currentObjects && !found) {
+		while (i < currentObjects && !found) {
 			if (objects[i].getRow() == row && objects[i].getCol() == col)
 				return i;
 			i++;
 		}
 		return -1;
-	}/* si vuestra solución requiere que sea public,se puede cambiar */
+	}*//* si vuestra solución requiere que sea public,se puede cambiar */
 
-	private void remove(GameObject object) {
-		int i = getIndex(object.getRow(), object.getCol());
-		while (i < currentObjects) {
-			objects[i] = objects[i + 1];
-			i++;
+	private void remove(GameObject object, int index) {
+		while (index < currentObjects) {
+			objects[index] = objects[index + 1];
+			index++;
 		}
-		objects[i] = null;
+		objects[index] = null;
 		currentObjects--;
 	}
 
@@ -81,14 +81,14 @@ public class GameObjectBoard {
 		int max = currentObjects;
 		for (int i = 0; i < max; i++) {
 			if (objects[i] != null && !objects[i].isAlive() && !objects[i].isOut()) {
-				remove(objects[i]);
+				remove(objects[i], i);
 				i--;
 			}
 		}
 	}
-	
+
 	public void laseToAll() {
-		for(int i = 0; i < currentObjects; i++) {
+		for (int i = 0; i < currentObjects; i++) {
 			objects[i].receiveShockWaveAttack(Shockwave.DAMAGE);
 		}
 	}

@@ -40,7 +40,7 @@ public class UCMShip extends Ship {
 	}
 
 	public boolean hasShockwave() {
-		return shockwave.getActive();
+		return shockwave != null && shockwave.getActive();
 	}
 
 	public void setShockwave(Game game) {

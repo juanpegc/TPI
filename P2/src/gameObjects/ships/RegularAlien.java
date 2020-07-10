@@ -1,17 +1,20 @@
 package gameObjects.ships;
 
+import gameObjects.IExecuteRandomActions;
 import tp.p1.Game;
+import tp.p1.Move;
 
-public class RegularAlien extends AlienShip{
+public class RegularAlien extends AlienShip implements IExecuteRandomActions{
 
 	public static final int SHIELD = 2;
 	public static final int POINTS = 5;
 	public static final int HARM = 0;
-	
-	
+
 	public RegularAlien(Game game, int row, int col) {
 		super(game, row, col, SHIELD, POINTS);
 		this.live = SHIELD;
+		move = Move.LEFT;
+		AlienShip.ALIEN_SHIPS_ALIVE++;
 	}
 
 	@Override
@@ -20,21 +23,20 @@ public class RegularAlien extends AlienShip{
 	}
 
 	@Override
-	public void move() {
-		// TODO Auto-generated method stub
-		
+	public void computerAction() {
+		if(isAlive() && IExecuteRandomActions.canGenerateExplosiveAlien(game)) {
+			//Create Explosive Alien
+		}
 	}
 
 	@Override
-	public void computerAction() {
-		// TODO Auto-generated method stub
-		
+	public void move() {
+		super.move();
 	}
 
 	@Override
 	public void onDelete() {
-		// TODO Auto-generated method stub
-		
+		AlienShip.ALIEN_SHIPS_ALIVE--;
 	}
-	
+
 }

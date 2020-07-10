@@ -1,6 +1,7 @@
 package gameObjects.ships;
 
 import tp.p1.Game;
+import tp.p1.Move;
 
 public abstract class EnemyShip extends Ship{
 
@@ -9,6 +10,15 @@ public abstract class EnemyShip extends Ship{
 	public EnemyShip(Game game, int row, int col, int live, int points) {
 		super(game, row, col, live);
 		this.points = points;
+	}
+	
+	public void move(Move move) {
+		if(move == Move.LEFT)
+			col--;
+		else if(move == Move.RIGHT)
+			col++;
+		else if(move == Move.DOWN)
+			row++;
 	}
 	
 	@Override

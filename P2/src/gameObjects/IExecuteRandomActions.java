@@ -11,4 +11,8 @@ public interface IExecuteRandomActions {
 	static boolean canGenerateRandomBomb(Game game) {
 		return game.getRandom().nextDouble() < game.getLevel().getShootingFrequency();
 	}
+	
+	static boolean canGenerateExplosiveAlien(Game game) {
+		return game.getRandom().nextDouble() < 0.05;
+	}
 }

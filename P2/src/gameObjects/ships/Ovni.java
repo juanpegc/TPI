@@ -1,7 +1,9 @@
 package gameObjects.ships;
 
+import gameObjects.GameObject;
 import gameObjects.IExecuteRandomActions;
 import tp.p1.Game;
+import tp.p1.Move;
 
 public class Ovni extends EnemyShip implements IExecuteRandomActions {
 
@@ -11,13 +13,14 @@ public class Ovni extends EnemyShip implements IExecuteRandomActions {
 
 	public Ovni(Game game, int row, int col) {
 		super(game, row, col, SHIELD, POINTS);
+		move = Move.LEFT;
 	}
 
 	private void reset() {
 		col = Game.COLUMN;
 		live = SHIELD;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "O[" + live + "]";
@@ -26,10 +29,11 @@ public class Ovni extends EnemyShip implements IExecuteRandomActions {
 	@Override
 	public void move() {
 		if (isAlive()) {
-			col--;
-			if(col == -1) {
+			super.move(move);
+			if (col == -1)
 				live = 0;
-			}
+			GameObject go = game.isSomethingHere(row, col);
+			if(go != null && go != this)go.performAttack(this);
 		}
 	}
 
@@ -58,7 +62,7 @@ public class Ovni extends EnemyShip implements IExecuteRandomActions {
 		col = -1;
 		game.enableShockWave();
 	}
-	
+
 	public void deactivate() {
 		live = 0;
 	}

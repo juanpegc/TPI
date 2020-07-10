@@ -54,13 +54,17 @@ public class Game implements IPlayerController {
 	public String positionToString(int row, int col) {
 		return board.toString(row, col);
 	}
+	
+	public GameObject isSomethingHere(int row, int col) {
+		return board.getObjectInPosition(row, col);
+	}
 
 	public boolean isFinished() {
 		return playerWin() || aliensWin() || doExit;
 	}
 
 	public boolean aliensWin() {
-		return !player.isAlive() || AlienShip.haveLanded();
+		return !player.isAlive() || AlienShip.HAVE_LANDED;
 	}
 
 	private boolean playerWin() {

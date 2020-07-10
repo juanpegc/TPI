@@ -12,6 +12,7 @@ public class Controller {
 	private Game game;
 	private static final String PROMPT  = "Command >";
 	private static final String unknownCommandMsg = "Invalid command.";
+	private FormattedPrinter printer;
 	
 	public Controller(Scanner sc, Game game) {
 		this.sc = sc;
@@ -32,10 +33,11 @@ public class Controller {
 				System.out.format(unknownCommandMsg);
 			}
 		}
+		System.out.println(printer.toString(game));
 	}
 	
 	public void printGame() {
-		FormattedPrinter printer = new FormattedPrinter();
+		printer = new FormattedPrinter();
 		System.out.println(printer.toString(game));
 	}
 

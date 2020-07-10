@@ -1,6 +1,7 @@
 package gameObjects;
 
 import tp.p1.Game;
+import tp.p1.Move;
 
 public abstract class GameObject implements IAttack {
 
@@ -8,6 +9,7 @@ public abstract class GameObject implements IAttack {
 	protected int col;
 	protected int live;
 	protected Game game;
+	protected Move move;
 
 	public GameObject(Game game, int row, int col, int live) {
 		this.row = row;
