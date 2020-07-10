@@ -2,16 +2,15 @@ package tp.p1.model.commands;
 
 import tp.p1.Game;
 
-public class ListCommand extends Command {
+public class BuySuperMissileCommand extends Command{
 
-	public ListCommand() {
-		super("list", "l", "List", "Prints the list of available ships.");
+	public BuySuperMissileCommand() {
+		super("supermissile", "sm", "SuperMissile", "Buy a SuperMissile");
 	}
 
 	@Override
 	public boolean execute(Game game) {
-		game.list();
-		return true;
+		return game.buySupermissile();
 	}
 
 	@Override
@@ -19,5 +18,5 @@ public class ListCommand extends Command {
 		if(matchCommandName(commandWords[0])) return this;
 		return null;
 	}
-
+	
 }

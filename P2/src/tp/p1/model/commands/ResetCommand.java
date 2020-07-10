@@ -16,8 +16,7 @@ public class ResetCommand extends Command {
 
 	@Override
 	public Command parse(String[] commandWords) {
-		String command = commandWords[0].toLowerCase();
-		if(command.equals(name) || command.equals(shortcut)) return this;
+		if(matchCommandName(commandWords[0])) return this;
 		return null;
 	}
 

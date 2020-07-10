@@ -25,7 +25,7 @@ public class MoveCommand extends Command {
 	@Override
 	public Command parse(String[] commandWords) {
 		boolean valid = false;
-		if (commandWords.length == 3 && commandWords[0].toLowerCase().equals(name)) {
+		if (commandWords.length == 3 && matchCommandName(commandWords[0])) {
 			String direction = commandWords[1].toLowerCase();
 			String lines = commandWords[2].toLowerCase();
 

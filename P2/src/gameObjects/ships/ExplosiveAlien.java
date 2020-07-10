@@ -1,15 +1,15 @@
 package gameObjects.ships;
 
 import tp.p1.Game;
+import tp.p1.Move;
 
 public class ExplosiveAlien extends AlienShip{
 
-	public static final int POINTS = 5;
-	public static final int SHIELD = 1;
 	
-	public ExplosiveAlien(Game game, int row, int col) {
-		super(game, row, col, SHIELD, POINTS);
-		// TODO Auto-generated constructor stub
+	public ExplosiveAlien(Game game, int row, int col, Move direction, int live, int points, int cyclesToMove) {
+		super(game, row, col, live, points);
+		cycles = cyclesToMove;
+		move = direction;
 	}
 	
 	@Override
@@ -30,7 +30,7 @@ public class ExplosiveAlien extends AlienShip{
 	
 	@Override
 	public void onDelete() {
-		AlienShip.ALIEN_SHIPS_ALIVE--;
+		super.onDelete();
 	}
 
 }

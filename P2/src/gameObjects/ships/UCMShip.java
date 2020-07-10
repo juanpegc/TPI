@@ -1,6 +1,7 @@
 package gameObjects.ships;
 
 import gameObjects.weapons.Shockwave;
+import gameObjects.weapons.SuperMissile;
 import gameObjects.weapons.UCMMissile;
 import tp.p1.Game;
 import tp.p1.Move;
@@ -10,6 +11,7 @@ public class UCMShip extends Ship {
 	public static final int SHIELD = 3;
 	private Shockwave shockwave;
 	private UCMMissile ucmMissile;
+	private int supermissile;
 
 	public UCMShip(Game game, int row, int col) {
 		super(game, row, col, SHIELD);
@@ -81,6 +83,22 @@ public class UCMShip extends Ship {
 			return ucmMissile;
 		}
 		return null;
+	}
+
+	public SuperMissile shootSupermissile() {
+		if(supermissile > 0) {
+			supermissile--;
+			return new SuperMissile(game, row, col);
+		}
+		return null;
+	}
+	
+	public int getSupermissile() {
+		return supermissile;
+	}
+
+	public void setSuperMissile() {
+		supermissile++;
 	}
 
 }

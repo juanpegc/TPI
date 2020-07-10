@@ -20,6 +20,7 @@ public class FormattedPrinter extends GamePrinter {
 		value += "Points: " + game.getPoints() + "\n";
 		value += "Remaining aliens: " + AlienShip.numberAliens() + "\n";
 		value += "Superpower: " + (game.getUCMShip().hasShockwave() ? "Yes" : "No") + "\n";
+		value += "Supermissile: " + (game.getUCMShip().getSupermissile() + "\n");
 		return value;
 	}
 

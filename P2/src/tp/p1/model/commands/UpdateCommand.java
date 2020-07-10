@@ -15,8 +15,7 @@ public class UpdateCommand extends Command {
 
 	@Override
 	public Command parse(String[] commandWords) {
-		String command = commandWords[0].toLowerCase();
-		if (command.equals(this.name) || command.equals(this.shortcut) || command.equals(""))
+		if (matchCommandName(commandWords[0]) || commandWords[0].equals(""))
 			return this;
 		return null;
 	}

@@ -51,6 +51,10 @@ public class Game implements IPlayerController {
 		board.add(object);
 	}
 
+	public void removeObject(GameObject object) {
+		board.remove(object, board.getIndex(object.getRow(), object.getCol()));
+	}
+	
 	public String positionToString(int row, int col) {
 		return board.toString(row, col);
 	}
@@ -158,5 +162,24 @@ public class Game implements IPlayerController {
 
 	public void laseToAll() {
 		board.laseToAll();
+	}
+
+	public boolean buySupermissile() {
+		if(points >= 20) {
+			points-=20;
+			player.setSuperMissile();
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean shootSuperMissile() {
+		GameObject superMissile = player.shootSupermissile();
+		if(superMissile != null) {
+			addObject(superMissile);
+			return true;
+		}
+		return false;
 	}
 }

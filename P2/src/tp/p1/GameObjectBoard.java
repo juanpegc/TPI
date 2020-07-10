@@ -34,8 +34,8 @@ public class GameObjectBoard {
 		return go;
 	}
 	
-/*
-	private int getIndex(int row, int col) {
+
+	public int getIndex(int row, int col) {
 		int i = 0;
 		boolean found = false;
 		while (i < currentObjects && !found) {
@@ -44,9 +44,9 @@ public class GameObjectBoard {
 			i++;
 		}
 		return -1;
-	}*//* si vuestra solución requiere que sea public,se puede cambiar */
+	}
 
-	private void remove(GameObject object, int index) {
+	public void remove(GameObject object, int index) {
 		while (index < currentObjects) {
 			objects[index] = objects[index + 1];
 			index++;

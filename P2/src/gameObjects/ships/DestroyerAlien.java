@@ -38,7 +38,7 @@ public class DestroyerAlien extends AlienShip implements IExecuteRandomActions{
 
 	@Override
 	public void onDelete() {
-		AlienShip.ALIEN_SHIPS_ALIVE--;		
+		super.onDelete();	
 	}
 
 	
