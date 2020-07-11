@@ -100,4 +100,15 @@ public class GameObjectBoard {
 		else
 			return go.toString();
 	}
+	
+	public String toPlainText() {
+		String value = "";
+		
+		for(int i = 0; i < currentObjects; i++) {
+			value += objects[i].toPlainText();
+		}
+		
+		return value;
+	}
+	
 }

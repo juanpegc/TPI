@@ -40,4 +40,9 @@ public class RegularAlien extends AlienShip implements IExecuteRandomActions{
 		super.onDelete();
 	}
 
+	@Override
+	public String toPlainText() {
+		return "R;" + row + "," + col + ";" + live + ";" + cycles + ";" + move.name() + "\n";
+	}
+
 }

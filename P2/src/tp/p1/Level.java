@@ -75,7 +75,7 @@ public enum Level {
 		for (Level level : Level.values())
 			if (level.name().equalsIgnoreCase(cadenaEntrada))
 				return level;
-		return EASY;
+		return null;
 	}
 
 }

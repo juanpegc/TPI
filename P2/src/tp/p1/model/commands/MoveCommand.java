@@ -1,5 +1,6 @@
 package tp.p1.model.commands;
 
+import exceptions.CommandExecuteException;
 import tp.p1.Game;
 import tp.p1.Move;
 
@@ -17,9 +18,8 @@ public class MoveCommand extends Command {
 	}
 	
 	@Override
-	public boolean execute(Game game) {
-		game.move(move);
-		return true;
+	public boolean execute(Game game) throws CommandExecuteException{
+		return game.move(move);
 	}
 
 	@Override

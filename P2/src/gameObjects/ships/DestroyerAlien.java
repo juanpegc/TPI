@@ -41,6 +41,11 @@ public class DestroyerAlien extends AlienShip implements IExecuteRandomActions{
 		super.onDelete();	
 	}
 
+	@Override
+	public String toPlainText() {
+		return "D;" + row + "," + col + ";" + live + ";" + cycles + ";" + move.name() + "\n";
+	}
+
 	
 	
 	

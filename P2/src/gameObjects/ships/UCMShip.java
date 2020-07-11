@@ -1,5 +1,6 @@
 package gameObjects.ships;
 
+import exceptions.CommandExecuteException;
 import gameObjects.weapons.Shockwave;
 import gameObjects.weapons.SuperMissile;
 import gameObjects.weapons.UCMMissile;
@@ -26,15 +27,26 @@ public class UCMShip extends Ship {
 		return "^__^";
 	}
 
-	public void move(Move move) {
-		if (move == Move.LEFT && col >= 1)
+	public boolean move(Move move) throws CommandExecuteException {
+		boolean valid = false;
+		if (move == Move.LEFT && col >= 1) {
 			col--;
-		else if (move == Move.LEFT2 && col > 1)
+			valid = true;
+		}
+		else if (move == Move.LEFT2 && col > 1) {
 			col -= 2;
-		else if (move == Move.RIGHT && col < Game.COLUMN - 1)
+			valid = true;
+		}
+		else if (move == Move.RIGHT && col < Game.COLUMN - 1) {
 			col++;
-		else if (move == Move.RIGHT2 && col < Game.COLUMN - 2)
+			valid = true;
+		}
+		else if (move == Move.RIGHT2 && col < Game.COLUMN - 2) {
 			col += 2;
+			valid = true;
+		}
+		if(!valid) throw new CommandExecuteException("Ship too near border");
+		return valid;
 	}
 
 	@Override
@@ -99,6 +111,12 @@ public class UCMShip extends Ship {
 
 	public void setSuperMissile() {
 		supermissile++;
+	}
+
+	@Override
+	public String toPlainText() {
+		return "P;" + row + "," + col + ";" + live + ";" + game.getPoints() +
+				";" + ((shockwave == null)?false:shockwave) + ";" + supermissile + "\n";
 	}
 
 }

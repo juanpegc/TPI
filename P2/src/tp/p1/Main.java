@@ -3,32 +3,36 @@ package tp.p1;
 import java.util.Random;
 import java.util.Scanner;
 
+import exceptions.ParametersException;
 import tp.p1.controller.Controller;
 
 public class Main {
 
-	
 	public static void main(String[] args) {
-		String levelName = "";
 		Random seed;
-		Level level = Level.EASY;
+		Level level = null;
 		int menuOption;
 		Scanner scanner = new Scanner(System.in);
 		Game game;
 		Controller controller;
-
 		try {
-			levelName = args[0];
-			seed = new Random(Integer.parseInt(args[1]));
-		} catch (NumberFormatException e) {
-			System.out.println("(Introduced seed not valid)");
-			seed = new Random((int) System.currentTimeMillis());
-		} catch (ArrayIndexOutOfBoundsException e) {
-			System.out.println("(Missing arguments)");
+			if (args.length == 0 || args.length > 2)
+				throw new ParametersException("");
+			level = Level.parse(args[0]);
+			if (level == null)
+				throw new ParametersException(": level must be one of: EASY, HARD, INSANE");
+			try {
+				seed = new Random(Integer.parseInt(args[1]));
+			} catch (NumberFormatException e) {
+				System.out.println("(Introduced seed not valid)");
+				seed = new Random((int) System.currentTimeMillis());
+			}
+		} catch (ParametersException e) {
+			System.out.println("Usage: Main <EASY|HARD|INSANE> [seed]" + e.getMessage());
 			seed = new Random((int) System.currentTimeMillis());
 		}
-
-		if (!levelName.equals("")) {
+		
+		if (level != null) {
 			do {
 				showIntro();
 				showMenu();
@@ -44,12 +48,6 @@ public class Main {
 					break;
 				case 1:
 					scanner.nextLine();
-					if (levelName.toUpperCase().equals("HARD"))
-						level = Level.HARD;
-					else if (levelName.toUpperCase().equals("INSANE"))
-						level = Level.INSANE;
-					else if(levelName.toUpperCase().equals("EASY"))
-						level = Level.EASY;
 					game = new Game(level, seed);
 					controller = new Controller(scanner, game);
 					controller.run();

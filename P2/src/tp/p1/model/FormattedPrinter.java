@@ -49,7 +49,7 @@ public class FormattedPrinter extends GamePrinter {
 		return value;
 	}
 
-	public String drawList(Game game) {
+	public static String drawList(Game game) {
 		String value = "[R]egular ship: Points: " + RegularAlien.POINTS + " - Harm: " + RegularAlien.HARM
 				+ " - Shield: " + RegularAlien.SHIELD + "\n";
 		value += "[D]estroyer ship: Points: " + DestroyerAlien.POINTS + " - Harm: " + Bomb.DAMAGE + " - Shield: "

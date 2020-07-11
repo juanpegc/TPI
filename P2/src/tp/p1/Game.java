@@ -2,9 +2,11 @@ package tp.p1;
 
 import java.util.Random;
 
+import exceptions.CommandExecuteException;
 import gameObjects.GameObject;
 import gameObjects.ships.AlienShip;
 import gameObjects.ships.UCMShip;
+import tp.p1.model.FormattedPrinter;
 
 public class Game implements IPlayerController {
 
@@ -105,9 +107,8 @@ public class Game implements IPlayerController {
 	}
 
 	@Override
-	public boolean move(Move move) {
-		player.move(move);
-		return true;
+	public boolean move(Move move) throws CommandExecuteException{	
+		return player.move(move);
 	}
 
 	@Override
@@ -141,7 +142,7 @@ public class Game implements IPlayerController {
 	}
 
 	public void list() {
-		// System.out.println(gamePrinter.drawList());
+		System.out.println(FormattedPrinter.drawList(this));
 	}
 
 	public int getCycles() {

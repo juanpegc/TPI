@@ -40,4 +40,9 @@ public class Shockwave extends Weapon {
 		return active;
 	}
 
+	@Override
+	public String toPlainText() {
+		return "";
+	}
+
 }

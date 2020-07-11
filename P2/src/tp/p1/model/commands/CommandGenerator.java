@@ -1,5 +1,7 @@
 package tp.p1.model.commands;
 
+import exceptions.CommandParseException;
+
 public class CommandGenerator {
 	
 	private static Command[] availableCommands = {
@@ -11,16 +13,19 @@ public class CommandGenerator {
 			new MoveCommand(),
 			new ShockwaveCommand(),
 			new ShootCommand(),
-			new BuySuperMissileCommand()
+			new BuySuperMissileCommand(),
+			new StringifyCommand(),
+			new ListPrintersCommand()
 			};
 	
-	public static Command parseCommand(String[] commandWords) {
+	public static Command parseCommand(String[] commandWords) throws CommandParseException{
 		int i = 0;
 		Command command = null;
 		while(command == null && i < availableCommands.length) {
 			command = availableCommands[i].parse(commandWords);
 			i++;
 		}
+		if(command == null) throw new CommandParseException("Unknown command");
 		return command;
 	}
 	

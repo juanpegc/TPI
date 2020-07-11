@@ -33,4 +33,9 @@ public class ExplosiveAlien extends AlienShip{
 		super.onDelete();
 	}
 
+	@Override
+	public String toPlainText() {
+		return "D;" + row + "," + col + ";" + live + ";" + cycles + ";" + move.name() + "\n";
+	}
+
 }

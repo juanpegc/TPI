@@ -40,4 +40,9 @@ public class Bomb extends Weapon {
 	public void computerAction() {
 	}
 
+	@Override
+	public String toPlainText() {
+		return "B;" + row + "," + col + "\n";
+	}
+
 }

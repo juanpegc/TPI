@@ -1,5 +1,6 @@
 package gameObjects;
 
+import tp.p1.FileContentsVerifier;
 import tp.p1.Game;
 import tp.p1.Move;
 
@@ -55,4 +56,6 @@ public abstract class GameObject implements IAttack {
 	public abstract void onDelete();
 	public abstract void move();
 	public abstract String toString();
+	public abstract String toPlainText();
+	//protected abstract GameObject parse(String stringFromFile, Game game, FileContentsVerifier verifier);
 }

@@ -43,4 +43,9 @@ public class UCMMissile extends Weapon {
 	public void computerAction() {
 	}
 
+	@Override
+	public String toPlainText() {
+		return "M;" + row + "," + col + "\n";
+	}
+
 }

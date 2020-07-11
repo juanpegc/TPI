@@ -43,4 +43,9 @@ public class SuperMissile extends Weapon{
 		return true;
 	}
 
+	@Override
+	public String toPlainText() {
+		return "X;" + row + "," + col + "\n";
+	}
+
 }
