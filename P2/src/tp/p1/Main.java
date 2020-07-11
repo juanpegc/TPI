@@ -16,22 +16,26 @@ public class Main {
 		Game game;
 		Controller controller;
 		try {
-			if (args.length == 0 || args.length > 2)
+			if (args.length == 0 || args.length > 2) {
+				scanner.close();
 				throw new ParametersException("");
+			}
 			level = Level.parse(args[0]);
-			if (level == null)
+			if (level == null) {
+				scanner.close();
 				throw new ParametersException(": level must be one of: EASY, HARD, INSANE");
+			}
 			try {
 				seed = new Random(Integer.parseInt(args[1]));
 			} catch (NumberFormatException e) {
-				System.out.println("(Introduced seed not valid)");
+				System.out.println("Usage: Main <EASY|HARD|INSANE> [seed]: the seed must be a number");
 				seed = new Random((int) System.currentTimeMillis());
 			}
 		} catch (ParametersException e) {
 			System.out.println("Usage: Main <EASY|HARD|INSANE> [seed]" + e.getMessage());
 			seed = new Random((int) System.currentTimeMillis());
 		}
-		
+
 		if (level != null) {
 			do {
 				showIntro();

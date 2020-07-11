@@ -30,7 +30,7 @@ public class Controller {
 				command.execute(game);
 				game.update();
 			} catch (CommandParseException | CommandExecuteException e) {
-				System.out.println(e.getMessage());
+				System.out.println(e.getMessage() + "\n\n");
 			}
 		}
 		System.out.println(printer.toString(game));

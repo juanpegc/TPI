@@ -1,5 +1,7 @@
 package tp.p1.model.commands;
 
+import exceptions.CommandExecuteException;
+import exceptions.MissileInFlightException;
 import tp.p1.Game;
 
 public class ShootCommand extends Command {
@@ -16,16 +18,21 @@ public class ShootCommand extends Command {
 	}
 
 	@Override
-	public boolean execute(Game game) {
-		if (!superMissile)
-			return game.shootMissile();
-		else {
-			return game.shootSuperMissile();
+	public boolean execute(Game game) throws CommandExecuteException {
+		try {
+			if (!superMissile)
+				game.shootMissile();
+			else {
+				game.shootSuperMissile();
+			}
+			return true;
+		} catch (MissileInFlightException e) {
+			throw new CommandExecuteException("Cannot fire missile" + e.getMessage());
 		}
 	}
 
 	@Override
-	public Command parse(String[] commandWords) {
+	public Command parse(String[] commandWords){
 		if (matchCommandName(commandWords[0])) {
 			if (commandWords.length == 1) {
 				return this;
@@ -36,12 +43,7 @@ public class ShootCommand extends Command {
 					return shootCommand;
 				}
 			}
-
 		}
-
-		String command = commandWords[0].toLowerCase();
-		if (command.equals(name) || command.equals(shortcut))
-			return this;
 		return null;
 	}
 

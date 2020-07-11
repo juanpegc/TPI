@@ -1,6 +1,8 @@
 package gameObjects.weapons;
 
+import exceptions.FileContentsException;
 import gameObjects.GameObject;
+import tp.p1.FileContentsVerifier;
 import tp.p1.Game;
 
 public class SuperMissile extends Weapon{
@@ -46,6 +48,18 @@ public class SuperMissile extends Weapon{
 	@Override
 	public String toPlainText() {
 		return "X;" + row + "," + col + "\n";
+	}
+
+	@Override
+	protected GameObject parse(String stringFromFile, Game game, FileContentsVerifier verifier) throws FileContentsException {
+		SuperMissile supermissile = null;
+		if(verifier.verifyWeaponString(stringFromFile, game)) {
+			supermissile = new SuperMissile(game, row, col);
+			Weapon.game = game;
+			supermissile.row = getRowFromString(stringFromFile);
+			supermissile.col = getColFromString(stringFromFile);
+		} else throw new FileContentsException(": SuperMissile incorrect format");
+		return supermissile;
 	}
 
 }

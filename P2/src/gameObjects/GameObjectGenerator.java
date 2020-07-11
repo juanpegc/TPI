@@ -1,5 +1,6 @@
 package gameObjects;
 
+import exceptions.FileContentsException;
 import gameObjects.ships.DestroyerAlien;
 import gameObjects.ships.ExplosiveAlien;
 import gameObjects.ships.Ovni;
@@ -25,7 +26,7 @@ public class GameObjectGenerator {
 			new UCMMissile(null, 0, 0),
 			new SuperMissile(null, 0, 0)
 			};
-/*
+
 	public static GameObject parse(String stringFromFile, Game game, FileContentsVerifier verifier)
 			throws FileContentsException {
 		GameObject gameObject = null;
@@ -36,5 +37,5 @@ public class GameObjectGenerator {
 		}
 		return gameObject;
 	}
-*/
+
 }

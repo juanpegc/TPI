@@ -1,9 +1,16 @@
 package tp.p1;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.util.Random;
 
-import exceptions.CommandExecuteException;
+import exceptions.FileContentsException;
+import exceptions.MissileInFlightException;
+import exceptions.NoShockwaveException;
+import exceptions.NotEnoughPointsException;
+import exceptions.OffWorldException;
 import gameObjects.GameObject;
+import gameObjects.GameObjectGenerator;
 import gameObjects.ships.AlienShip;
 import gameObjects.ships.UCMShip;
 import tp.p1.model.FormattedPrinter;
@@ -56,11 +63,11 @@ public class Game implements IPlayerController {
 	public void removeObject(GameObject object) {
 		board.remove(object, board.getIndex(object.getRow(), object.getCol()));
 	}
-	
+
 	public String positionToString(int row, int col) {
 		return board.toString(row, col);
 	}
-	
+
 	public GameObject isSomethingHere(int row, int col) {
 		return board.getObjectInPosition(row, col);
 	}
@@ -107,23 +114,24 @@ public class Game implements IPlayerController {
 	}
 
 	@Override
-	public boolean move(Move move) throws CommandExecuteException{	
-		return player.move(move);
+	public void move(Move move) throws OffWorldException {
+		player.move(move);
 	}
 
 	@Override
-	public boolean shootMissile() {
+	public void shootMissile() throws MissileInFlightException {
 		GameObject ucmMissile = player.shoot();
 		if (ucmMissile != null) {
 			addObject(ucmMissile);
-			return true;
-		}
-		return false;
+		} else
+			throw new MissileInFlightException(": missile already exists on board");
 	}
 
 	@Override
-	public boolean shockWave() {
-		return player.shockwave();
+	public void shockWave() throws NoShockwaveException {
+		boolean valid = player.shockwave();
+		if (!valid)
+			throw new NoShockwaveException(": no shockwave available");
 	}
 
 	@Override
@@ -165,22 +173,46 @@ public class Game implements IPlayerController {
 		board.laseToAll();
 	}
 
-	public boolean buySupermissile() {
-		if(points >= 20) {
-			points-=20;
-			player.setSuperMissile();
-			return true;
-		}
-		return false;
+	@Override
+	public void shootSuperMissile() throws MissileInFlightException {
+		GameObject superMissile = player.shootSupermissile();
+		if (superMissile != null)
+			addObject(superMissile);
+		else
+			throw new MissileInFlightException(": no supermissile available");
 	}
 
 	@Override
-	public boolean shootSuperMissile() {
-		GameObject superMissile = player.shootSupermissile();
-		if(superMissile != null) {
-			addObject(superMissile);
-			return true;
+	public void buySuperMissile() throws NotEnoughPointsException {
+		boolean valid = false;
+		if (points >= 20) {
+			points -= 20;
+			player.setSuperMissile();
+			valid = true;
 		}
-		return false;
+		if (!valid)
+			throw new NotEnoughPointsException(": not enought points to buy supermissile");
+	}
+
+	public void load(BufferedReader br) throws FileContentsException {
+		String line;
+		boolean loading;
+		FileContentsVerifier verifier = new FileContentsVerifier();
+
+		loading = false;
+		try {
+			line = br.readLine().trim();
+			while (line != null && !line.isEmpty()) {
+				GameObject gameObject = GameObjectGenerator.parse(line, this, verifier);
+				if (gameObject == null) {
+					throw new FileContentsException("invalid file, " + "unrecognised line prefix");
+				}
+				board.add(gameObject);
+				line = br.readLine().trim();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 	}
 }

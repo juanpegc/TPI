@@ -1,5 +1,7 @@
 package tp.p1.model.commands;
 
+import exceptions.CommandExecuteException;
+import exceptions.NoShockwaveException;
 import tp.p1.Game;
 
 public class ShockwaveCommand extends Command {
@@ -9,8 +11,13 @@ public class ShockwaveCommand extends Command {
 	}
 
 	@Override
-	public boolean execute(Game game) {
-		return game.shockWave();
+	public boolean execute(Game game) throws CommandExecuteException{
+		try {
+			game.shockWave();
+			return true;
+		}catch(NoShockwaveException e) {
+			throw new CommandExecuteException("Cannot release shockwave" + e.getMessage());
+		}
 	}
 
 	@Override

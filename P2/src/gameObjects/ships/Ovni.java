@@ -1,7 +1,9 @@
 package gameObjects.ships;
 
+import exceptions.FileContentsException;
 import gameObjects.GameObject;
 import gameObjects.IExecuteRandomActions;
+import tp.p1.FileContentsVerifier;
 import tp.p1.Game;
 import tp.p1.Move;
 
@@ -71,6 +73,19 @@ public class Ovni extends EnemyShip implements IExecuteRandomActions {
 	public String toPlainText() {
 		if(isAlive()) return "O;" + row + "," + col + ";" + "\n";
 		return "";
+	}
+
+	@Override
+	protected GameObject parse(String stringFromFile, Game game, FileContentsVerifier verifier) throws FileContentsException {
+		Ovni ovni = null;
+		if(verifier.verifyOvniString(stringFromFile, game, Ovni.SHIELD)) {
+			ovni = new Ovni(game, row, col);
+			ovni.game = game;
+			ovni.row = getRowFromString(stringFromFile);
+			ovni.col = getColFromString(stringFromFile);
+			ovni.live = Integer.parseInt(stringFromFile.split(";")[2]);
+		} else throw new FileContentsException(": Ovni incorrect format");
+		return ovni;
 	}
 
 }

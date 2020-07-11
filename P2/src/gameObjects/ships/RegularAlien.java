@@ -1,6 +1,9 @@
 package gameObjects.ships;
 
+import exceptions.FileContentsException;
+import gameObjects.GameObject;
 import gameObjects.IExecuteRandomActions;
+import tp.p1.FileContentsVerifier;
 import tp.p1.Game;
 import tp.p1.Move;
 
@@ -43,6 +46,21 @@ public class RegularAlien extends AlienShip implements IExecuteRandomActions{
 	@Override
 	public String toPlainText() {
 		return "R;" + row + "," + col + ";" + live + ";" + cycles + ";" + move.name() + "\n";
+	}
+
+	@Override
+	protected GameObject parse(String stringFromFile, Game game, FileContentsVerifier verifier) throws FileContentsException {
+		RegularAlien regular = null;
+		if(verifier.verifyAlienShipString(stringFromFile, game, SHIELD)) {
+			regular = new RegularAlien(game, row, col);
+			regular.game = game;
+			regular.row = getRowFromString(stringFromFile);
+			regular.col = getColFromString(stringFromFile);
+			regular.live = Integer.parseInt(stringFromFile.split(";")[2]);
+			regular.cycles = Integer.parseInt(stringFromFile.split(";")[3]);
+			regular.move = Move.parse(stringFromFile.split(";")[4]);
+		} else throw new FileContentsException(": Regular Alien incorrect format");
+		return regular;
 	}
 
 }

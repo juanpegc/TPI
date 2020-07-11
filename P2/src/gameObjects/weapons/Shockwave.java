@@ -1,6 +1,7 @@
 package gameObjects.weapons;
 
 import gameObjects.GameObject;
+import tp.p1.FileContentsVerifier;
 import tp.p1.Game;
 
 public class Shockwave extends Weapon {
@@ -43,6 +44,12 @@ public class Shockwave extends Weapon {
 	@Override
 	public String toPlainText() {
 		return "";
+	}
+
+	@Override
+	protected GameObject parse(String stringFromFile, Game game, FileContentsVerifier verifier) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

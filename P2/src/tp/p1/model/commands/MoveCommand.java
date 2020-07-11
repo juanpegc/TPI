@@ -1,6 +1,7 @@
 package tp.p1.model.commands;
 
 import exceptions.CommandExecuteException;
+import exceptions.OffWorldException;
 import tp.p1.Game;
 import tp.p1.Move;
 
@@ -19,7 +20,12 @@ public class MoveCommand extends Command {
 	
 	@Override
 	public boolean execute(Game game) throws CommandExecuteException{
-		return game.move(move);
+		try {
+			game.move(move);
+			return true;
+		}catch(OffWorldException e) {
+			throw new CommandExecuteException("Cannot perform move" + e.getMessage());
+		}
 	}
 
 	@Override
@@ -43,7 +49,6 @@ public class MoveCommand extends Command {
 				valid = true;
 			}
 			if(valid) return new MoveCommand(move);
-	
 		}
 		return null;
 	}

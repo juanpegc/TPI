@@ -1,13 +1,17 @@
 package tp.p1;
 
-import exceptions.CommandExecuteException;
+import exceptions.MissileInFlightException;
+import exceptions.NoShockwaveException;
+import exceptions.NotEnoughPointsException;
+import exceptions.OffWorldException;
 
 public interface IPlayerController {
 // PLAYER ACTIONS
-	public boolean move(Move move) throws CommandExecuteException;
-	public boolean shootMissile();
-	public boolean shockWave();
-	public boolean shootSuperMissile();
+	public void move(Move move) throws OffWorldException;
+	public void shootMissile() throws MissileInFlightException;
+	public void shockWave() throws NoShockwaveException;
+	public void shootSuperMissile()throws MissileInFlightException;
+	public void buySuperMissile() throws NotEnoughPointsException;
 
 // CALLBACKS
 	public void receivePoints(int points);

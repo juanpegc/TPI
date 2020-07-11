@@ -1,6 +1,9 @@
 package gameObjects.weapons;
 
+import exceptions.FileContentsException;
 import gameObjects.GameObject;
+import gameObjects.ships.Ovni;
+import tp.p1.FileContentsVerifier;
 import tp.p1.Game;
 
 public class Bomb extends Weapon {
@@ -43,6 +46,18 @@ public class Bomb extends Weapon {
 	@Override
 	public String toPlainText() {
 		return "B;" + row + "," + col + "\n";
+	}
+
+	@Override
+	protected GameObject parse(String stringFromFile, Game game, FileContentsVerifier verifier) throws FileContentsException {
+		Bomb bomb = null;
+		if(verifier.verifyWeaponString(stringFromFile, game)) {
+			bomb = new Bomb(game, row, col);
+			Weapon.game = game;
+			bomb.row = getRowFromString(stringFromFile);
+			bomb.col = getColFromString(stringFromFile);
+		} else throw new FileContentsException(": Bomb incorrect format");
+		return bomb;
 	}
 
 }

@@ -1,6 +1,8 @@
 package gameObjects.weapons;
 
+import exceptions.FileContentsException;
 import gameObjects.GameObject;
+import tp.p1.FileContentsVerifier;
 import tp.p1.Game;
 
 public class UCMMissile extends Weapon {
@@ -46,6 +48,18 @@ public class UCMMissile extends Weapon {
 	@Override
 	public String toPlainText() {
 		return "M;" + row + "," + col + "\n";
+	}
+
+	@Override
+	protected GameObject parse(String stringFromFile, Game game, FileContentsVerifier verifier) throws FileContentsException {
+		UCMMissile missile = null;
+		if(verifier.verifyWeaponString(stringFromFile, game)) {
+			missile = new UCMMissile(game, row, col);
+			Weapon.game = game;
+			missile.row = getRowFromString(stringFromFile);
+			missile.col = getColFromString(stringFromFile);
+		} else throw new FileContentsException(": UCMMissile incorrect format");
+		return missile;
 	}
 
 }
