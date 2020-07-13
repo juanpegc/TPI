@@ -1,7 +1,6 @@
 package tp.p1;
 
 import gameObjects.GameObject;
-import gameObjects.weapons.Bomb;
 import gameObjects.weapons.Shockwave;
 
 public class GameObjectBoard {

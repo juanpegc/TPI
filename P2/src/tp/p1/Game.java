@@ -193,10 +193,10 @@ public class Game implements IPlayerController {
 	}
 
 	public void load(BufferedReader br) throws FileContentsException {
-		boolean loading = false;
 		int cycles;
 		Level level;
 		GameObjectBoard boardAux = new GameObjectBoard(Game.ROW, Game.COLUMN);
+		UCMShip ucmShipAux = getUCMShip();
 		FileContentsVerifier verifier = new FileContentsVerifier();
 		int alienShipsAlive = AlienShip.ALIEN_SHIPS_ALIVE;
 
@@ -246,6 +246,11 @@ public class Game implements IPlayerController {
 
 		} catch (IOException e) {
 			throw new FileContentsException("There was a problem with the file");
+		}catch(FileContentsException e) {
+			setUCMShip(ucmShipAux);
+			AlienShip.ALIEN_SHIPS_ALIVE = alienShipsAlive;
+			
+			throw new FileContentsException("");
 		}
 
 	}
