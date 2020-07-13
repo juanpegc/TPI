@@ -53,13 +53,21 @@ public class UCMMissile extends Weapon {
 	@Override
 	protected GameObject parse(String stringFromFile, Game game, FileContentsVerifier verifier) throws FileContentsException {
 		UCMMissile missile = null;
-		if(verifier.verifyWeaponString(stringFromFile, game)) {
+		if(verifier.verifyWeaponString(stringFromFile, game) && stringFromFile.split(";")[0].equals("M")) {
 			missile = new UCMMissile(game, row, col);
 			Weapon.game = game;
 			missile.row = getRowFromString(stringFromFile);
 			missile.col = getColFromString(stringFromFile);
-		} else throw new FileContentsException(": UCMMissile incorrect format");
+			game.setUCMShipMissile(missile);
+		}
 		return missile;
 	}
+	
+
+	@Override
+	public int getNumber() {
+		return -1;
+	}
+
 
 }

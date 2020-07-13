@@ -1,5 +1,7 @@
 package tp.p1;
 
+import gameObjects.ships.DestroyerAlien;
+
 public class FileContentsVerifier {
 
 	public static final String separator1 = ";";
@@ -35,7 +37,7 @@ public class FileContentsVerifier {
 		if (words.length != 3)
 			return false;
 		String[] coords = words[1].split(separator2);
-		if (!verifyCoords(Integer.parseInt(coords[0]), Integer.parseInt(coords[1]), game)
+		if (!words[0].equals("O") || !verifyCoords(Integer.parseInt(coords[0]), Integer.parseInt(coords[1]), game)
 				|| !verifyLives(Integer.parseInt(words[2]), armour))
 			return false;
 		return true;
@@ -45,7 +47,7 @@ public class FileContentsVerifier {
 	public boolean verifyPlayerString(String lineFromFile, Game game, int armour) {
 		String[] words = lineFromFile.split(separator1);
 		appendToFoundInFileString(words[0]);
-		if (words.length != 5)
+		if (words.length != 6)
 			return false;
 		String[] coords = words[1].split(separator2);
 		if (!verifyCoords(Integer.parseInt(coords[0]), Integer.parseInt(coords[1]), game)
@@ -59,7 +61,7 @@ public class FileContentsVerifier {
 	public boolean verifyAlienShipString(String lineFromFile, Game game, int armour) {
 		String[] words = lineFromFile.split(separator1);
 		appendToFoundInFileString(words[0]);
-		if (words.length != 5)
+		if (words.length < 5)
 			return false;
 		String[] coords = words[1].split(separator2);
 		if (!verifyCoords(Integer.parseInt(coords[0]), Integer.parseInt(coords[1]), game)
@@ -69,6 +71,22 @@ public class FileContentsVerifier {
 			return false;
 		}
 		return true;
+	}
+	
+	public boolean verifyBombString(String lineFromFile, Game game) {
+		String[] words = lineFromFile.split(separator1);
+		if (words.length != 3)
+			return false;
+		appendToFoundInFileString(words[0]);
+		String[] coords = words[1].split(separator2);
+		if (!verifyCoords(Integer.parseInt(coords[0]), Integer.parseInt(coords[1]), game)
+				|| !verifyNumber(Integer.parseInt(words[2]), game))
+			return false;
+		return true;
+	}
+
+	private boolean verifyNumber(int number, Game game) {
+		return number < DestroyerAlien.n;
 	}
 
 	// Don’t catch NumberFormatException.

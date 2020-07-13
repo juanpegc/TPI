@@ -84,7 +84,7 @@ public class Ovni extends EnemyShip implements IExecuteRandomActions {
 			ovni.row = getRowFromString(stringFromFile);
 			ovni.col = getColFromString(stringFromFile);
 			ovni.live = Integer.parseInt(stringFromFile.split(";")[2]);
-		} else throw new FileContentsException(": Ovni incorrect format");
+		}
 		return ovni;
 	}
 

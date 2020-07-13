@@ -71,4 +71,5 @@ public abstract class GameObject implements IAttack {
 	public abstract String toString();
 	public abstract String toPlainText();
 	protected abstract GameObject parse(String stringFromFile, Game game, FileContentsVerifier verifier) throws FileContentsException;
+	public abstract int getNumber();
 }

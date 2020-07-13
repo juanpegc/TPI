@@ -16,7 +16,6 @@ public class RegularAlien extends AlienShip implements IExecuteRandomActions{
 	public RegularAlien(Game game, int row, int col) {
 		super(game, row, col, SHIELD, POINTS);
 		this.live = SHIELD;
-		move = Move.LEFT;
 		AlienShip.ALIEN_SHIPS_ALIVE++;
 	}
 
@@ -28,8 +27,8 @@ public class RegularAlien extends AlienShip implements IExecuteRandomActions{
 	@Override
 	public void computerAction() {
 		if(isAlive() && IExecuteRandomActions.canGenerateExplosiveAlien(game)) {
-			game.addObject(new ExplosiveAlien(game, row, col, move, live, POINTS, cycles));
-			game.removeObject(this);
+			ExplosiveAlien explosiveAlien = new ExplosiveAlien(game, row, col, move, live, POINTS, cycles);
+			game.replaceObject(this, explosiveAlien);
 		}
 	}
 
@@ -51,7 +50,7 @@ public class RegularAlien extends AlienShip implements IExecuteRandomActions{
 	@Override
 	protected GameObject parse(String stringFromFile, Game game, FileContentsVerifier verifier) throws FileContentsException {
 		RegularAlien regular = null;
-		if(verifier.verifyAlienShipString(stringFromFile, game, SHIELD)) {
+		if(verifier.verifyAlienShipString(stringFromFile, game, SHIELD) && stringFromFile.split(";")[0].equals("R")) {
 			regular = new RegularAlien(game, row, col);
 			regular.game = game;
 			regular.row = getRowFromString(stringFromFile);
@@ -59,7 +58,7 @@ public class RegularAlien extends AlienShip implements IExecuteRandomActions{
 			regular.live = Integer.parseInt(stringFromFile.split(";")[2]);
 			regular.cycles = Integer.parseInt(stringFromFile.split(";")[3]);
 			regular.move = Move.parse(stringFromFile.split(";")[4]);
-		} else throw new FileContentsException(": Regular Alien incorrect format");
+		}
 		return regular;
 	}
 

@@ -1,6 +1,7 @@
 package gameObjects.ships;
 
 import exceptions.FileContentsException;
+import exceptions.NotEnoughPointsException;
 import exceptions.OffWorldException;
 import gameObjects.GameObject;
 import gameObjects.weapons.Shockwave;
@@ -67,9 +68,9 @@ public class UCMShip extends Ship {
 
 	public boolean shockwave() {
 		if (hasShockwave()) {
-			game.laseToAll();
 			shockwave.deactivate();
 			shockwave = null;
+			game.laseToAll();
 			return true;
 		} else
 			return false;
@@ -87,8 +88,30 @@ public class UCMShip extends Ship {
 
 	@Override
 	public void onDelete() {
-		// TODO Auto-generated method stub
+		super.onDelete();
+	}
+	
+	public int getPoints() {
+		return points;
+	}
+	
+	public void setPoints(int points) {
+		this.points = points;
+	}
+	
+	public void buySuperMissile() throws NotEnoughPointsException {
+		boolean valid = false;
+		if (points >= 20) {
+			points -= 20;
+			setSuperMissile();
+			valid = true;
+		}
+		if (!valid)
+			throw new NotEnoughPointsException(": not enought points to buy supermissile");
+	}
 
+	public void receivePoints(int points) {
+		this.points += points;
 	}
 
 	public UCMMissile shoot() {
@@ -117,7 +140,7 @@ public class UCMShip extends Ship {
 
 	@Override
 	public String toPlainText() {
-		return "P;" + row + "," + col + ";" + live + ";" + game.getPoints() + ";"
+		return "P;" + row + "," + col + ";" + live + ";" + getPoints() + ";"
 				+ ((shockwave == null) ? false : shockwave) + ";" + supermissile + "\n";
 	}
 
@@ -135,9 +158,18 @@ public class UCMShip extends Ship {
 			if (Boolean.parseBoolean(stringFromFile.split(";")[4]))
 				setShockwave(game);
 			player.supermissile = Integer.parseInt(stringFromFile.split(";")[5]);
-		} else
-			throw new FileContentsException(": Player incorrect format");
+			game.setUCMShip(player);
+		}
 		return player;
 	}
+	
+	@Override
+	public boolean receiveExplosionAttack(int damage) {
+		getDamage(damage);
+		return true;
+	}
 
+	public void setUCMShipMissile(UCMMissile missile) {
+		this.ucmMissile = missile;
+	}
 }

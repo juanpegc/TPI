@@ -19,7 +19,7 @@ public class SaveCommand extends Command {
 	public boolean execute(Game game) throws CommandExecuteException {
 		String fileName;
 		Scanner sc = new Scanner(System.in);
-		System.out.println("Write the file name: ");
+		System.out.print("Write the file name: ");
 		fileName = sc.nextLine() + ".dat";
 		try {
 			FileWriter file = new FileWriter(fileName);

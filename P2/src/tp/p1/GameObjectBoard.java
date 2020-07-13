@@ -1,6 +1,7 @@
 package tp.p1;
 
 import gameObjects.GameObject;
+import gameObjects.weapons.Bomb;
 import gameObjects.weapons.Shockwave;
 
 public class GameObjectBoard {
@@ -33,7 +34,6 @@ public class GameObjectBoard {
 		}
 		return go;
 	}
-	
 
 	public int getIndex(int row, int col) {
 		int i = 0;
@@ -56,10 +56,10 @@ public class GameObjectBoard {
 	}
 
 	public void update() {
-		for (int i = 0; i < currentObjects; i++)
+		for (int i = 0; i < currentObjects; i++) {
 			objects[i].move();
-		for (int i = 0; i < currentObjects; i++)
 			checkAttacks(objects[i]);
+		}
 		removeDead();
 	}
 
@@ -70,6 +70,18 @@ public class GameObjectBoard {
 				object.performAttack(go);
 			}
 		}
+	}
+	
+	public boolean replaceObject(GameObject oldGO, GameObject newGO) {
+		boolean found = false;
+		int i = 0;
+		while (i < currentObjects && !found) {
+			found = objects[i].equals(oldGO);
+			if (found) objects[i] = newGO;
+			i++;
+		}
+		
+		return found;
 	}
 
 	public void computerAction() {
@@ -100,15 +112,26 @@ public class GameObjectBoard {
 		else
 			return go.toString();
 	}
-	
+
 	public String toPlainText() {
 		String value = "";
-		
-		for(int i = 0; i < currentObjects; i++) {
+
+		for (int i = 0; i < currentObjects; i++) {
 			value += objects[i].toPlainText();
 		}
-		
+
 		return value;
 	}
-	
+
+	public boolean hasBomb(int number) {
+		int i = 0;
+		boolean found = false;
+		while (i < currentObjects && !found) {
+			if (objects[i].getNumber() == number)
+				found = true;
+			i++;
+		}
+		return found;
+	}
+
 }

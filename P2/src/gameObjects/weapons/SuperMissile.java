@@ -11,7 +11,6 @@ public class SuperMissile extends Weapon{
 	
 	public SuperMissile(Game game, int row, int col) {
 		super(game, row, col, DAMAGE);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -53,13 +52,19 @@ public class SuperMissile extends Weapon{
 	@Override
 	protected GameObject parse(String stringFromFile, Game game, FileContentsVerifier verifier) throws FileContentsException {
 		SuperMissile supermissile = null;
-		if(verifier.verifyWeaponString(stringFromFile, game)) {
+		if(verifier.verifyWeaponString(stringFromFile, game) && stringFromFile.split(";")[0].equals("X")) {
 			supermissile = new SuperMissile(game, row, col);
 			Weapon.game = game;
 			supermissile.row = getRowFromString(stringFromFile);
 			supermissile.col = getColFromString(stringFromFile);
-		} else throw new FileContentsException(": SuperMissile incorrect format");
+		}
 		return supermissile;
+	}
+
+
+	@Override
+	public int getNumber() {
+		return -1;
 	}
 
 }

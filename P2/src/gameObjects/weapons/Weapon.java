@@ -10,7 +10,6 @@ public abstract class Weapon extends GameObject{
 	
 	public Weapon(Game game, int row, int col, int damage) {
 		super(game, row, col, damage);
-		// TODO Auto-generated constructor stub
 	}
 	
 	public int getDamage() {
@@ -20,6 +19,11 @@ public abstract class Weapon extends GameObject{
 	@Override
 	public void onDelete() {
 		live = 0;
+	}
+	
+	@Override
+	public boolean receiveExplosionAttack(int damage) {
+		return true;
 	}
 
 }

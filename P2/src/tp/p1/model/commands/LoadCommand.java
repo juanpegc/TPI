@@ -21,7 +21,7 @@ public class LoadCommand extends Command {
 	public boolean execute(Game game) throws CommandExecuteException {
 		String fileName;
 		Scanner sc = new Scanner(System.in);
-		System.out.println("Write the file name: ");
+		System.out.print("Write the file name: ");
 		fileName = sc.nextLine() + ".dat";
 		try {
 			FileReader file = new FileReader(fileName);
@@ -42,7 +42,7 @@ public class LoadCommand extends Command {
 			throw new CommandExecuteException("Cannot load the game: " + e.getMessage());
 		}
 
-		return true;
+		return false;
 	}
 
 	@Override

@@ -2,21 +2,23 @@ package gameObjects.weapons;
 
 import exceptions.FileContentsException;
 import gameObjects.GameObject;
-import gameObjects.ships.Ovni;
 import tp.p1.FileContentsVerifier;
 import tp.p1.Game;
 
 public class Bomb extends Weapon {
 
 	public static final int DAMAGE = 1;
+	public static final String DRAW = " .  ";
+	private int owner;
 
-	public Bomb(Game game, int row, int col) {
+	public Bomb(Game game, int row, int col, int owner) {
 		super(game, row, col, DAMAGE);
+		this.owner = owner;
 	}
 
 	@Override
 	public String toString() {
-		return " .  ";
+		return DRAW;
 	}
 
 	public void move() {
@@ -24,6 +26,10 @@ public class Bomb extends Weapon {
 			row++;
 			if(row == Game.ROW) onDelete();
 		}
+	}
+	
+	public void setAlive() {
+		this.live = 1;
 	}
 
 	@Override
@@ -45,19 +51,25 @@ public class Bomb extends Weapon {
 
 	@Override
 	public String toPlainText() {
-		return "B;" + row + "," + col + "\n";
+		return "B;" + row + "," + col + ";" + owner + "\n";
 	}
 
 	@Override
 	protected GameObject parse(String stringFromFile, Game game, FileContentsVerifier verifier) throws FileContentsException {
 		Bomb bomb = null;
-		if(verifier.verifyWeaponString(stringFromFile, game)) {
-			bomb = new Bomb(game, row, col);
+		if(verifier.verifyBombString(stringFromFile, game)) {
+			bomb = new Bomb(game, row, col, owner);
 			Weapon.game = game;
 			bomb.row = getRowFromString(stringFromFile);
 			bomb.col = getColFromString(stringFromFile);
-		} else throw new FileContentsException(": Bomb incorrect format");
+			bomb.owner = Integer.parseInt(stringFromFile.split(";")[2]);
+		}
 		return bomb;
+	}
+
+	@Override
+	public int getNumber() {
+		return owner;
 	}
 
 }

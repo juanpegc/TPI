@@ -12,8 +12,12 @@ import exceptions.OffWorldException;
 import gameObjects.GameObject;
 import gameObjects.GameObjectGenerator;
 import gameObjects.ships.AlienShip;
+import gameObjects.ships.ExplosiveAlien;
+import gameObjects.ships.RegularAlien;
 import gameObjects.ships.UCMShip;
-import tp.p1.model.FormattedPrinter;
+import gameObjects.weapons.SuperMissile;
+import gameObjects.weapons.UCMMissile;
+import tp.p1.model.GamePrinter;
 
 public class Game implements IPlayerController {
 
@@ -21,7 +25,6 @@ public class Game implements IPlayerController {
 	public static final int COLUMN = 9;
 
 	private int currentCycle;
-	private int points;
 	private Random rand;
 	private Level level;
 	GameObjectBoard board;
@@ -38,7 +41,9 @@ public class Game implements IPlayerController {
 
 	public void initGame() {
 		currentCycle = 0;
-		points = 0;
+		AlienShip.SAME_MOVE = 0;
+		AlienShip.ALIEN_SHIPS_ALIVE = 0;
+		AlienShip.moveTmp = Move.LEFT;
 		board = initializer.initialize(this, level);
 		player = new UCMShip(this, ROW - 1, COLUMN / 2);
 		addObject(player);
@@ -97,10 +102,6 @@ public class Game implements IPlayerController {
 	public void exit() {
 		doExit = true;
 	}
-	/*
-	 * public String infoToString() { return cadena estado−juego para imprimir junto
-	 * con el tablero ; }
-	 */
 
 	public String getWinnerMessage() {
 		if (playerWin())
@@ -136,7 +137,7 @@ public class Game implements IPlayerController {
 
 	@Override
 	public void receivePoints(int points) {
-		this.points += points;
+		player.receivePoints(points);
 	}
 
 	@Override
@@ -146,11 +147,11 @@ public class Game implements IPlayerController {
 
 	@Override
 	public void enableMissile() {
-		// TODO implement
+		player.setSuperMissile();
 	}
 
 	public void list() {
-		System.out.println(FormattedPrinter.drawList(this));
+		System.out.println(GamePrinter.drawList(this));
 	}
 
 	public int getCycles() {
@@ -158,11 +159,15 @@ public class Game implements IPlayerController {
 	}
 
 	public int getPoints() {
-		return points;
+		return player.getPoints();
 	}
 
 	public UCMShip getUCMShip() {
 		return player;
+	}
+	
+	public void setUCMShip(UCMShip player) {
+		this.player = player;
 	}
 
 	public GameObjectBoard getGameObjectBoard() {
@@ -184,35 +189,80 @@ public class Game implements IPlayerController {
 
 	@Override
 	public void buySuperMissile() throws NotEnoughPointsException {
-		boolean valid = false;
-		if (points >= 20) {
-			points -= 20;
-			player.setSuperMissile();
-			valid = true;
-		}
-		if (!valid)
-			throw new NotEnoughPointsException(": not enought points to buy supermissile");
+		player.buySuperMissile();
 	}
 
 	public void load(BufferedReader br) throws FileContentsException {
-		String line;
-		boolean loading;
+		boolean loading = false;
+		int cycles;
+		Level level;
+		GameObjectBoard boardAux = new GameObjectBoard(Game.ROW, Game.COLUMN);
 		FileContentsVerifier verifier = new FileContentsVerifier();
+		int alienShipsAlive = AlienShip.ALIEN_SHIPS_ALIVE;
 
-		loading = false;
 		try {
+			String line = br.readLine().trim();
+			if (verifier.verifyCycleString(line)) {
+				cycles = Integer.parseInt(line.split(";")[1]);
+			} else
+				throw new FileContentsException("Invalid cycles number");
+			line = br.readLine().trim();
+			if (verifier.verifyLevelString(line)) {
+				level = Level.parse(line.split(";")[1]);
+			} else
+				throw new FileContentsException("Invalid Level");
 			line = br.readLine().trim();
 			while (line != null && !line.isEmpty()) {
 				GameObject gameObject = GameObjectGenerator.parse(line, this, verifier);
 				if (gameObject == null) {
-					throw new FileContentsException("invalid file, " + "unrecognised line prefix");
+					String error = line.split(";")[0];
+					if (error.equals("P"))
+						throw new FileContentsException(": UCMShip invalid format");
+					else if (error.equals("R"))
+						throw new FileContentsException(": Regular Alien invalid format");
+					else if (error.equals("E"))
+						throw new FileContentsException(": Explosive Alien invalid format");
+					else if (error.equals("D"))
+						throw new FileContentsException(": Destroyer Alien invalid format");
+					else if (error.equals("M"))
+						throw new FileContentsException(": UCMMissile invalid format");
+					else if (error.equals("X"))
+						throw new FileContentsException(": Supermissile invalid format");
+					else if (error.equals("O"))
+						throw new FileContentsException(": Ovni invalid format");
+					else if (error.equals("B"))
+						throw new FileContentsException(": Bomb invalid format");
+					else
+						throw new FileContentsException("invalid file, " + "unrecognised line prefix");
 				}
-				board.add(gameObject);
-				line = br.readLine().trim();
+				boardAux.add(gameObject);
+				line = br.readLine();
+				if (line != null)
+					line.trim();
 			}
+			currentCycle = cycles;
+			this.level = level;
+			this.board = boardAux;
+
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new FileContentsException("There was a problem with the file");
 		}
 
+	}
+
+	public boolean hasBomb(int number) {
+		return board.hasBomb(number);
+	}
+
+	public void setUCMShipMissile(UCMMissile missile) {
+		player.setUCMShipMissile(missile);
+	}
+	
+	public void setSupermissile(SuperMissile supermissile) {
+		board.add(supermissile);
+	}
+
+	public void replaceObject(RegularAlien regularAlien, ExplosiveAlien explosiveAlien) {
+		board.replaceObject(regularAlien, explosiveAlien);
 	}
 }

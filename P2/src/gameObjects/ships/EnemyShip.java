@@ -45,5 +45,13 @@ public abstract class EnemyShip extends Ship{
 		return false;
 	}
 	
+	@Override
+	public boolean receiveExplosionAttack(int damage) {
+		if(isAlive()) {
+			getDamage(damage);
+		}
+		return true;
+	}
+	
 	
 }

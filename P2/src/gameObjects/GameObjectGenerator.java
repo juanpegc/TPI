@@ -22,7 +22,7 @@ public class GameObjectGenerator {
 			new DestroyerAlien(null, 0, 0),
 			new ExplosiveAlien(null, 0, 0, null, 0, 0, 0),
 			new Shockwave(null, 0, 0),
-			new Bomb(null, 0, 0),
+			new Bomb(null, 0, 0, 0),
 			new UCMMissile(null, 0, 0),
 			new SuperMissile(null, 0, 0)
 			};

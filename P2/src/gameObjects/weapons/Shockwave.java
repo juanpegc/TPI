@@ -48,8 +48,13 @@ public class Shockwave extends Weapon {
 
 	@Override
 	protected GameObject parse(String stringFromFile, Game game, FileContentsVerifier verifier) {
-		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	@Override
+	public int getNumber() {
+		return -1;
+	}
+
 
 }
