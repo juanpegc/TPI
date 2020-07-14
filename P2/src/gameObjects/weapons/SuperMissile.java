@@ -21,8 +21,10 @@ public class SuperMissile extends Weapon{
 	public void move() {
 		if (row >= 0) {
 			row--;
-			if (row < 0)
+			if (row < 0) {
 				onDelete();
+				game.setSupermissile();
+			}
 		}
 	}
 
@@ -57,6 +59,7 @@ public class SuperMissile extends Weapon{
 			Weapon.game = game;
 			supermissile.row = getRowFromString(stringFromFile);
 			supermissile.col = getColFromString(stringFromFile);
+			game.setSupermissileOnAir();
 		}
 		return supermissile;
 	}

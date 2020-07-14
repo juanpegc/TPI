@@ -17,6 +17,7 @@ public class UCMShip extends Ship {
 	private Shockwave shockwave;
 	private UCMMissile ucmMissile;
 	private int supermissile;
+	private boolean supermissileOnAir;
 	private int points;
 
 	public UCMShip(Game game, int row, int col) {
@@ -26,6 +27,7 @@ public class UCMShip extends Ship {
 		this.col = col;
 		this.live = SHIELD;
 		this.points = 0;
+		supermissileOnAir = false;
 	}
 
 	@Override
@@ -123,7 +125,7 @@ public class UCMShip extends Ship {
 	}
 
 	public SuperMissile shootSupermissile() {
-		if (supermissile > 0) {
+		if (supermissile > 0 && !supermissileOnAir) {
 			supermissile--;
 			return new SuperMissile(game, row, col);
 		}
@@ -171,5 +173,14 @@ public class UCMShip extends Ship {
 
 	public void setUCMShipMissile(UCMMissile missile) {
 		this.ucmMissile = missile;
+	}
+	
+	public void setSupermissileOnAir() {
+		supermissileOnAir = true;
+	}
+
+	public void setSupermissileAvailable() {
+		supermissileOnAir = false;
+		
 	}
 }

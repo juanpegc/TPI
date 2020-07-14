@@ -64,7 +64,6 @@ public abstract class AlienShip extends EnemyShip {
 	@Override
 	public void onDelete() {
 		super.onDelete();
-		AlienShip.ALIEN_SHIPS_ALIVE--;
 	}
 
 }

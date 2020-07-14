@@ -181,10 +181,20 @@ public class Game implements IPlayerController {
 	@Override
 	public void shootSuperMissile() throws MissileInFlightException {
 		GameObject superMissile = player.shootSupermissile();
-		if (superMissile != null)
+		if (superMissile != null) {
 			addObject(superMissile);
+			setSupermissileOnAir();
+		}
 		else
 			throw new MissileInFlightException(": no supermissile available");
+	}
+	
+	public void setSupermissileOnAir() {
+		player.setSupermissileOnAir();
+	}
+
+	public void setSupermissile() {
+		player.setSupermissileAvailable();		
 	}
 
 	@Override
@@ -252,7 +262,6 @@ public class Game implements IPlayerController {
 			
 			throw new FileContentsException("");
 		}
-
 	}
 
 	public boolean hasBomb(int number) {
@@ -270,4 +279,5 @@ public class Game implements IPlayerController {
 	public void replaceObject(RegularAlien regularAlien, ExplosiveAlien explosiveAlien) {
 		board.replaceObject(regularAlien, explosiveAlien);
 	}
+
 }
