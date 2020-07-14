@@ -96,7 +96,7 @@ public class Game implements IPlayerController {
 	}
 
 	public boolean isOnBoard(int row, int col) {
-		return row >= -1 && row <= ROW && col >= 0 && col < COLUMN - 1;
+		return row >= -1 && row <= ROW && col >= 0 && col < COLUMN;
 	}
 
 	public void exit() {
@@ -209,6 +209,8 @@ public class Game implements IPlayerController {
 		UCMShip ucmShipAux = getUCMShip();
 		FileContentsVerifier verifier = new FileContentsVerifier();
 		int alienShipsAlive = AlienShip.ALIEN_SHIPS_ALIVE;
+		AlienShip.ALIEN_SHIPS_ALIVE = 0;
+		AlienShip.SAME_MOVE = 0;
 
 		try {
 			String line = br.readLine().trim();
@@ -260,7 +262,7 @@ public class Game implements IPlayerController {
 			setUCMShip(ucmShipAux);
 			AlienShip.ALIEN_SHIPS_ALIVE = alienShipsAlive;
 			
-			throw new FileContentsException("");
+			throw new FileContentsException(e.getMessage());
 		}
 	}
 
