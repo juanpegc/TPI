@@ -24,8 +24,6 @@ public abstract class EnemyShip extends Ship{
 	@Override
 	public void onDelete() {
 		super.onDelete();
-		AlienShip.ALIEN_SHIPS_ALIVE--;
-		if(AlienShip.SAME_MOVE > 0) AlienShip.SAME_MOVE--;
 		game.receivePoints(points);
 	}
 

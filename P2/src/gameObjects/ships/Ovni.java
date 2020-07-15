@@ -44,13 +44,13 @@ public class Ovni extends EnemyShip implements IExecuteRandomActions {
 		getDamage(damage);
 		return true;
 	}
-
+/*
 	@Override
 	public boolean receiveShockWaveAttack(int damage) {
 		getDamage(damage);
 		return true;
 	}
-
+*/
 	@Override
 	public void computerAction() {
 		if (!isAlive() && IExecuteRandomActions.canGenerateRandomOvni(game)) {

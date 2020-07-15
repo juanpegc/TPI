@@ -261,7 +261,6 @@ public class Game implements IPlayerController {
 		}catch(FileContentsException e) {
 			setUCMShip(ucmShipAux);
 			AlienShip.ALIEN_SHIPS_ALIVE = alienShipsAlive;
-			
 			throw new FileContentsException(e.getMessage());
 		}
 	}

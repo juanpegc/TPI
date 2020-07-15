@@ -92,15 +92,15 @@ public class UCMShip extends Ship {
 	public void onDelete() {
 		super.onDelete();
 	}
-	
+
 	public int getPoints() {
 		return points;
 	}
-	
+
 	public void setPoints(int points) {
 		this.points = points;
 	}
-	
+
 	public void buySuperMissile() throws NotEnoughPointsException {
 		boolean valid = false;
 		if (points >= 20) {
@@ -142,8 +142,13 @@ public class UCMShip extends Ship {
 
 	@Override
 	public String toPlainText() {
-		return "P;" + row + "," + col + ";" + live + ";" + getPoints() + ";"
-				+ ((shockwave == null) ? false : shockwave) + ";" + supermissile + "\n";
+		String value = "";
+		value += "P;" + row + "," + col + ";" + live + ";" + getPoints() + ";";
+		if(shockwave == null || !shockwave.getActive()) value += "false";
+		else value += "true";
+		value += ";" + supermissile + "\n";
+
+		return value;
 	}
 
 	@Override
@@ -158,13 +163,13 @@ public class UCMShip extends Ship {
 			player.live = Integer.parseInt(stringFromFile.split(";")[2]);
 			player.points = Integer.parseInt(stringFromFile.split(";")[3]);
 			if (Boolean.parseBoolean(stringFromFile.split(";")[4]))
-				setShockwave(game);
+				shockwave = new Shockwave(game, -1, -1);
 			player.supermissile = Integer.parseInt(stringFromFile.split(";")[5]);
 			game.setUCMShip(player);
 		}
 		return player;
 	}
-	
+
 	@Override
 	public boolean receiveExplosionAttack(int damage) {
 		getDamage(damage);
@@ -174,13 +179,13 @@ public class UCMShip extends Ship {
 	public void setUCMShipMissile(UCMMissile missile) {
 		this.ucmMissile = missile;
 	}
-	
+
 	public void setSupermissileOnAir() {
 		supermissileOnAir = true;
 	}
 
 	public void setSupermissileAvailable() {
 		supermissileOnAir = false;
-		
+
 	}
 }
