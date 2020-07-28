@@ -32,7 +32,7 @@ public class SaveCommand extends Command {
 			throw new CommandExecuteException("Cannot save the game state: There was a problem with the file");
 		}
 
-		return true;
+		return false;
 	}
 
 	@Override

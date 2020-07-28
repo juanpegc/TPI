@@ -8,6 +8,7 @@ public abstract class AlienShip extends EnemyShip {
 	public static int SAME_MOVE = 0;
 	public static boolean HAVE_LANDED;
 	public static int ALIEN_SHIPS_ALIVE;
+	public static int ALIEN_SHIPS_LOAD = 0;
 	public static Move moveTmp = Move.LEFT;
 	protected Move move;
 	protected int cycles;
@@ -21,7 +22,7 @@ public abstract class AlienShip extends EnemyShip {
 	}
 
 	public static boolean allDead() {
-		return ALIEN_SHIPS_ALIVE == 0;
+		return ALIEN_SHIPS_ALIVE <= 0;
 	}
 
 	public static int numberAliens() {

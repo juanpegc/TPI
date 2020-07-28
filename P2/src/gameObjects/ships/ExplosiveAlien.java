@@ -67,6 +67,7 @@ public class ExplosiveAlien extends AlienShip {
 			explosive.live = Integer.parseInt(stringFromFile.split(";")[2]);
 			explosive.cycles = Integer.parseInt(stringFromFile.split(";")[3]);
 			explosive.move = Move.parse(stringFromFile.split(";")[4]);
+			ALIEN_SHIPS_LOAD++;
 		}
 		return explosive;
 	}

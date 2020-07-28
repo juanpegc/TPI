@@ -11,7 +11,7 @@ public class ListCommand extends Command {
 	@Override
 	public boolean execute(Game game) {
 		game.list();
-		return true;
+		return false;
 	}
 
 	@Override

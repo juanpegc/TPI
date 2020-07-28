@@ -75,6 +75,7 @@ public class DestroyerAlien extends AlienShip implements IExecuteRandomActions {
 				destroyer.number = Integer.parseInt(stringFromFile.split(";")[6]);
 				bomb = new Bomb(game, 0, 0, number);
 			}
+			ALIEN_SHIPS_LOAD++;
 		}
 		return destroyer;
 	}

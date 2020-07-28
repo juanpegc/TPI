@@ -27,8 +27,8 @@ public class Controller {
 			String[] words = sc.nextLine().toLowerCase().trim().split("\\s+");
 			try {
 				Command command = CommandGenerator.parseCommand(words);
-				command.execute(game);
-				game.update();
+				if (command.execute(game))
+					game.update();
 			} catch (CommandParseException | CommandExecuteException e) {
 				System.out.println(e.getMessage() + "\n\n");
 			}

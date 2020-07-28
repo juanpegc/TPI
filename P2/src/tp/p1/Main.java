@@ -27,7 +27,7 @@ public class Main {
 			}
 			try {
 				seed = new Random(Integer.parseInt(args[1]));
-			} catch (NumberFormatException e) {
+			} catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
 				System.out.println("Usage: Main <EASY|HARD|INSANE> [seed]: the seed must be a number");
 				seed = new Random((int) System.currentTimeMillis());
 			}

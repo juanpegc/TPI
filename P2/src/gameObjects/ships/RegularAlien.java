@@ -58,6 +58,7 @@ public class RegularAlien extends AlienShip implements IExecuteRandomActions{
 			regular.live = Integer.parseInt(stringFromFile.split(";")[2]);
 			regular.cycles = Integer.parseInt(stringFromFile.split(";")[3]);
 			regular.move = Move.parse(stringFromFile.split(";")[4]);
+			ALIEN_SHIPS_LOAD++;
 		}
 		return regular;
 	}

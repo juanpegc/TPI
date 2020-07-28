@@ -9,7 +9,7 @@ public class GameObjectBoard {
 	private int tamMax;
 
 	public GameObjectBoard(int rows, int cols) {
-		tamMax = 24; // TODO esto hay que cambiarlo
+		tamMax = 24;
 		currentObjects = 0;
 		objects = new GameObject[tamMax];
 	}
@@ -57,18 +57,8 @@ public class GameObjectBoard {
 	public void update() {
 		for (int i = 0; i < currentObjects; i++) {
 			objects[i].move();
-			checkAttacks(objects[i]);
 		}
 		removeDead();
-	}
-
-	private void checkAttacks(GameObject object) {
-		for (int i = 0; i < currentObjects; i++) {
-			GameObject go = getObjectInPosition(objects[i].getRow(), objects[i].getCol());
-			if (!go.equals(object) && go.isAlive() && object.isAlive() && go.isHere(object.getRow(), object.getCol())) {
-				object.performAttack(go);
-			}
-		}
 	}
 	
 	public boolean replaceObject(GameObject oldGO, GameObject newGO) {

@@ -9,23 +9,35 @@ public class SuperMissile extends Weapon{
 
 	public static final int DAMAGE = 2;
 	
+	private Game game;
+	
 	public SuperMissile(Game game, int row, int col) {
 		super(game, row, col, DAMAGE);
+		this.game = game;
 	}
 
 	@Override
 	public void computerAction() {		
 	}
 
+	public void checkDamage() {
+		GameObject go = game.isSomethingHere(row, col);
+		if(isAlive() && go != null && !go.equals(this) && !go.toString().equals(game.getUCMShip().toString())) {
+			performAttack(go);
+		}
+	}
+	
 	@Override
 	public void move() {
-		if (row >= 0) {
+		checkDamage();
+		if (isAlive() && row >= 0) {
 			row--;
 			if (row < 0) {
 				onDelete();
 				game.setSupermissile();
 			}
 		}
+		checkDamage();
 	}
 
 	@Override

@@ -209,6 +209,7 @@ public class Game implements IPlayerController {
 		UCMShip ucmShipAux = getUCMShip();
 		FileContentsVerifier verifier = new FileContentsVerifier();
 		int alienShipsAlive = AlienShip.ALIEN_SHIPS_ALIVE;
+		int sameMove = AlienShip.SAME_MOVE;
 		AlienShip.ALIEN_SHIPS_ALIVE = 0;
 		AlienShip.SAME_MOVE = 0;
 
@@ -252,6 +253,7 @@ public class Game implements IPlayerController {
 				if (line != null)
 					line.trim();
 			}
+			AlienShip.ALIEN_SHIPS_ALIVE = AlienShip.ALIEN_SHIPS_LOAD;
 			currentCycle = cycles;
 			this.level = level;
 			this.board = boardAux;
@@ -261,6 +263,7 @@ public class Game implements IPlayerController {
 		}catch(FileContentsException e) {
 			setUCMShip(ucmShipAux);
 			AlienShip.ALIEN_SHIPS_ALIVE = alienShipsAlive;
+			AlienShip.SAME_MOVE = sameMove;
 			throw new FileContentsException(e.getMessage());
 		}
 	}

@@ -13,7 +13,7 @@ public class StringifyCommand extends Command{
 	public boolean execute(Game game) {
 		Stringifier printer = new Stringifier();
 		System.out.println(printer.toString(game));
-		return true;
+		return false;
 	}
 
 	@Override
