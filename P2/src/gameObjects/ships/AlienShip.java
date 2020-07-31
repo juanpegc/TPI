@@ -34,8 +34,8 @@ public abstract class AlienShip extends EnemyShip {
 		cycles--;
 		if (cycles == 0) {
 			cycles = game.getLevel().getNumCyclesToMoveOneCell();
+			super.move(move);
 			if (move == Move.DOWN && SAME_MOVE > 0) {
-				super.move(move);
 				SAME_MOVE--;
 				if (col == 0) {
 					move = Move.RIGHT;
@@ -43,30 +43,29 @@ public abstract class AlienShip extends EnemyShip {
 				} else if (col == Game.COLUMN - 1) {
 					move = Move.LEFT;
 					moveTmp = move;
-				} else
-					move = moveTmp;
+				}
 				HAVE_LANDED = HAVE_LANDED || row == Game.ROW - 1;
 			} else {
-				super.move(move);
 				if (SAME_MOVE > 0) {
 					move = Move.DOWN;
 					moveTmp = move;
-				}
-				else if ((move == Move.LEFT && col == 0) || (move == Move.RIGHT && col == Game.COLUMN - 1)) {
+				} else if ((move == Move.LEFT && col == 0) || (move == Move.RIGHT && col == Game.COLUMN - 1)) {
 					SAME_MOVE = ALIEN_SHIPS_ALIVE;
 					move = Move.DOWN;
 					moveTmp = move;
 				}
 			}
 		}
-		if(move != moveTmp) move = moveTmp;
+		if (move != moveTmp)
+			move = moveTmp;
 	}
 
 	@Override
 	public void onDelete() {
 		super.onDelete();
 		ALIEN_SHIPS_ALIVE--;
-		if(SAME_MOVE > 0) SAME_MOVE--;
+		if (SAME_MOVE > 0)
+			SAME_MOVE--;
 	}
 
 }

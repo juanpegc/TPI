@@ -10,9 +10,11 @@ public class Bomb extends Weapon {
 	public static final int DAMAGE = 1;
 	public static final String DRAW = " .  ";
 	private int owner;
+	private Game game;
 
 	public Bomb(Game game, int row, int col, int owner) {
 		super(game, row, col, DAMAGE);
+		this.game = game;
 		this.owner = owner;
 	}
 
@@ -21,9 +23,17 @@ public class Bomb extends Weapon {
 		return DRAW;
 	}
 
+	public void checkDamage() {
+		GameObject go = game.isSomethingHere(row, col);
+		if (isAlive() && go != null && !go.equals(this)) {
+			performAttack(go);
+		}
+	}
+	
 	public void move() {
 		if (isAlive() && row <= Game.ROW) {
 			row++;
+			checkDamage();
 			if(row == Game.ROW) onDelete();
 		}
 	}

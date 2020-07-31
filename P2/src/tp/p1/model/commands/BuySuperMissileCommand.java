@@ -16,7 +16,7 @@ public class BuySuperMissileCommand extends Command{
 			game.buySuperMissile();
 			return true;
 		}catch(NotEnoughPointsException e) {
-			throw new CommandExecuteException("Cannot fire supermissile" + e.getMessage());
+			throw new CommandExecuteException("Cannot buy supermissile" + e.getMessage());
 		}
 	}
 
